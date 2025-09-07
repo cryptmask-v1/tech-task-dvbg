@@ -47,6 +47,12 @@ const AddUserModal = ({ open, onClose, onUserAdded }: AddUserModalProps) => {
           variant="outlined"
           value={newUser.name}
           onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSubmit();
+            }
+          }}
         />
         <TextField
           margin="dense"

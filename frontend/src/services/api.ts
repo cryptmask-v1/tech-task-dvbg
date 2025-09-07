@@ -3,12 +3,14 @@ import { supabase } from "./supabaseClient";
 
 // Users API
 export const fetchUsers = async (): Promise<User[]> => {
-  const { data, error } = await supabase.from("users").select("*");
+  const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .order("id", { ascending: true }); // ID'ye göre sırala
 
   if (error) throw error;
   return data || [];
 };
-
 export const createUser = async (user: Omit<User, "id">): Promise<User> => {
   const { data, error } = await supabase
     .from("users")
@@ -49,10 +51,13 @@ export const fetchPosts = async (): Promise<Post[]> => {
   return data || [];
 };
 
-export const createPost = async (post: Omit<Post, "id">): Promise<Post> => {
+export const createPost = async (postData: {
+  title: string;
+  user_id: number;
+}): Promise<Post> => {
   const { data, error } = await supabase
     .from("posts")
-    .insert([post])
+    .insert([postData])
     .select()
     .single();
 
@@ -62,11 +67,11 @@ export const createPost = async (post: Omit<Post, "id">): Promise<Post> => {
 
 export const updatePost = async (
   id: number,
-  post: Partial<Omit<Post, "id">>
+  postData: { title: string }
 ): Promise<Post> => {
   const { data, error } = await supabase
     .from("posts")
-    .update(post)
+    .update(postData)
     .eq("id", id)
     .select()
     .single();

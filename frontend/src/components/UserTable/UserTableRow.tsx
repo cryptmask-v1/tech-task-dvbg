@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Box,
+  Button,
   Collapse,
   IconButton,
   TableCell,
@@ -12,6 +13,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PostsTable from "./PostsTable";
+import AddIcon from "@mui/icons-material/Add";
 import type { User, Post } from "../../types";
 
 interface UserTableRowProps {
@@ -21,6 +23,7 @@ interface UserTableRowProps {
   onDeleteUser: (user: User) => void;
   onEditPost?: (post: Post) => void;
   onDeletePost?: (post: Post) => void;
+  onAddPost?: (user: User) => void;
 }
 
 const UserTableRow = ({
@@ -30,6 +33,7 @@ const UserTableRow = ({
   onDeleteUser,
   onEditPost,
   onDeletePost,
+  onAddPost,
 }: UserTableRowProps) => {
   const [open, setOpen] = React.useState(false);
 
@@ -89,9 +93,25 @@ const UserTableRow = ({
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                User Posts
-              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="h6" gutterBottom component="div">
+                  User Posts
+                </Typography>
+                <Button
+                  size="small"
+                  startIcon={<AddIcon />}
+                  onClick={() => onAddPost?.(user)} // Handler çağır
+                  variant="outlined"
+                >
+                  Add Post
+                </Button>
+              </Box>
               <PostsTable
                 posts={userPosts}
                 onEditPost={onEditPost}

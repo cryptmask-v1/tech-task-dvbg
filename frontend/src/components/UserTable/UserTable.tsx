@@ -17,6 +17,7 @@ interface UserTableProps {
   onDeleteUser: (user: User) => void;
   onEditPost?: (post: Post) => void;
   onDeletePost?: (post: Post) => void;
+  onAddPost?: (user: User) => void;
 }
 
 const UserTable = ({
@@ -26,6 +27,7 @@ const UserTable = ({
   onDeleteUser,
   onEditPost,
   onDeletePost,
+  onAddPost,
 }: UserTableProps) => {
   return (
     <TableContainer component={Paper}>
@@ -52,6 +54,7 @@ const UserTable = ({
                 onDeleteUser={onDeleteUser}
                 onEditPost={onEditPost}
                 onDeletePost={onDeletePost}
+                onAddPost={onAddPost}
               />
             );
           })}

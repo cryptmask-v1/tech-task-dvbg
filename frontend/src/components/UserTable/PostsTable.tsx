@@ -24,7 +24,7 @@ const PostsTable = ({ posts, onEditPost, onDeletePost }: PostsTableProps) => {
         <TableRow>
           <TableCell>Post ID</TableCell>
           <TableCell>Title</TableCell>
-          <TableCell align="center">Actions</TableCell>
+          <TableCell align="right">Actions</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -34,12 +34,12 @@ const PostsTable = ({ posts, onEditPost, onDeletePost }: PostsTableProps) => {
               {post.id}
             </TableCell>
             <TableCell>{post.title}</TableCell>
-            <TableCell align="center">
+            <TableCell sx={{ pr: 0 }} align="right">
               <Box
                 sx={{
                   display: "flex",
                   gap: 1.5,
-                  justifyContent: "center",
+                  justifyContent: "flex-end",
                 }}
               >
                 <IconButton
