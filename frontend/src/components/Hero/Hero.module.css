@@ -1,0 +1,70 @@
+.heroSection {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://images.unsplash.com/photo-1585504198199-20277593b94f");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+  max-width: 600px;
+  font-weight: 300;
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.link {
+  display: inline-block;
+  padding: 1rem 2rem;
+  border: 2px solid white;
+  border-radius: 50px;
+  background-color: transparent;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.link:hover {
+  background-color: white;
+  color: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.link.primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.link.primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  color: white;
+}
