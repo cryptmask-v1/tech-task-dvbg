@@ -249,25 +249,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 _This project was developed as a technical demonstration showcasing modern React development practices, TypeScript integration, and full-stack application architecture._
-{
-files: ['**/*.{ts,tsx}'],
-extends: [
-// Other configs...
-// Enable lint rules for React
-reactX.configs['recommended-typescript'],
-// Enable lint rules for React DOM
-reactDom.configs.recommended,
-],
-languageOptions: {
-parserOptions: {
-project: ['./tsconfig.node.json', './tsconfig.app.json'],
-tsconfigRootDir: import.meta.dirname,
-},
-// other options...
-},
-},
-])
-
-```
-
-```
