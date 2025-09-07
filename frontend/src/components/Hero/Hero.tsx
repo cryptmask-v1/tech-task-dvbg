@@ -13,9 +13,6 @@ const Hero = () => {
         <Link className={`${styles.link} ${styles.primary}`} to="/users">
           Manage Users
         </Link>
-        <Link className={styles.link} to="/posts">
-          View Posts
-        </Link>
       </div>
     </div>
   );

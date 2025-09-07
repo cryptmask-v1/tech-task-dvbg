@@ -21,19 +21,19 @@ const Header = () => {
           <nav className={styles.navigation}>
             <Link
               className={`${styles.link} ${
+                location.pathname === "/" ? styles.active : ""
+              }`}
+              to="/"
+            >
+              Home
+            </Link>
+            <Link
+              className={`${styles.link} ${
                 location.pathname === "/users" ? styles.active : ""
               }`}
               to="/users"
             >
               Users
-            </Link>
-            <Link
-              className={`${styles.link} ${
-                location.pathname === "/posts" ? styles.active : ""
-              }`}
-              to="/posts"
-            >
-              Posts
             </Link>
           </nav>
         </div>

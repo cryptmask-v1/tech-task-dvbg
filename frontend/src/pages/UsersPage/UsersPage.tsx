@@ -8,6 +8,9 @@ import { fetchUsers, fetchPosts } from "../../services/api";
 import type { User, Post } from "../../types";
 import { Button, Box, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import AddPostModal from "../../components/Modals/AddPostModal";
+import EditPostModal from "../../components/Modals/EditPostModal";
+import DeletePostModal from "../../components/Modals/DeletePostModal";
 
 const UsersPage = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -17,7 +20,16 @@ const UsersPage = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openAddPostModal, setOpenAddPostModal] = useState(false);
+  const [openEditPostModal, setOpenEditPostModal] = useState(false);
+  const [openDeletePostModal, setOpenDeletePostModal] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
+  const handleUserAdded = (user: User) => {
+    setUsers((prev) => [...prev, user]);
+  };
 
   const handleEditUser = (user: User) => {
     setSelectedUser(user);
@@ -29,10 +41,6 @@ const UsersPage = () => {
     setOpenDeleteModal(true);
   };
 
-  const handleUserAdded = (user: User) => {
-    setUsers((prev) => [...prev, user]);
-  };
-
   const handleUserUpdated = (updatedUser: User) => {
     setUsers((users) =>
       users.map((u) => (u.id === updatedUser.id ? updatedUser : u))
@@ -41,6 +49,36 @@ const UsersPage = () => {
 
   const handleUserDeleted = (userId: number) => {
     setUsers((users) => users.filter((u) => u.id !== userId));
+  };
+
+  const handleAddPost = (user: User) => {
+    setSelectedUser(user);
+    setOpenAddPostModal(true);
+  };
+
+  const handlePostAdded = (post: Post) => {
+    setPosts((prev) => [...prev, post]);
+    setOpenAddPostModal(false);
+  };
+
+  const handleEditPost = (post: Post) => {
+    setSelectedPost(post);
+    setOpenEditPostModal(true);
+  };
+
+  const handleDeletePost = (post: Post) => {
+    setSelectedPost(post);
+    setOpenDeletePostModal(true);
+  };
+
+  const handlePostUpdated = (updatedPost: Post) => {
+    setPosts((posts) =>
+      posts.map((p) => (p.id === updatedPost.id ? updatedPost : p))
+    );
+  };
+
+  const handlePostDeleted = (postId: number) => {
+    setPosts((posts) => posts.filter((p) => p.id !== postId));
   };
 
   useEffect(() => {
@@ -83,6 +121,9 @@ const UsersPage = () => {
           posts={posts}
           onEditUser={handleEditUser}
           onDeleteUser={handleDeleteUser}
+          onAddPost={handleAddPost}
+          onEditPost={handleEditPost}
+          onDeletePost={handleDeletePost}
         />
 
         {/* Modular Modals */}
@@ -104,6 +145,27 @@ const UsersPage = () => {
           onClose={() => setOpenDeleteModal(false)}
           user={selectedUser}
           onUserDeleted={handleUserDeleted}
+        />
+
+        <AddPostModal
+          open={openAddPostModal}
+          onClose={() => setOpenAddPostModal(false)}
+          user={selectedUser}
+          onPostAdded={handlePostAdded}
+        />
+
+        <EditPostModal
+          open={openEditPostModal}
+          onClose={() => setOpenEditPostModal(false)}
+          post={selectedPost}
+          onPostUpdated={handlePostUpdated}
+        />
+
+        <DeletePostModal
+          open={openDeletePostModal}
+          onClose={() => setOpenDeletePostModal(false)}
+          post={selectedPost}
+          onPostDeleted={handlePostDeleted}
         />
       </Box>
     </div>
