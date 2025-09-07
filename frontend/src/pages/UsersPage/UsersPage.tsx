@@ -1,32 +1,47 @@
 import Header from "../../components/Header/Header";
 import UserTable from "../../components/UserTable/UserTable";
+import AddUserModal from "../../components/Modals/AddUserModal";
+import EditUserModal from "../../components/Modals/EditUserModal";
+import DeleteUserModal from "../../components/Modals/DeleteUserModal";
 import { useState, useEffect } from "react";
 import { fetchUsers, fetchPosts } from "../../services/api";
 import type { User, Post } from "../../types";
 import { Button, Box, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { createUser } from "../../services/api";
-
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-} from "@mui/material";
 
 const UsersPage = () => {
   const [users, setUsers] = useState<User[]>([]);
-
   const [posts, setPosts] = useState<Post[]>([]);
 
-  const [openModal, setOpenModal] = useState(false);
+  // Modal states
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-  const [newUser, setNewUser] = useState({
-    name: "",
-    username: "",
-    email: "",
-  });
+  const handleEditUser = (user: User) => {
+    setSelectedUser(user);
+    setOpenEditModal(true);
+  };
+
+  const handleDeleteUser = (user: User) => {
+    setSelectedUser(user);
+    setOpenDeleteModal(true);
+  };
+
+  const handleUserAdded = (user: User) => {
+    setUsers((prev) => [...prev, user]);
+  };
+
+  const handleUserUpdated = (updatedUser: User) => {
+    setUsers((users) =>
+      users.map((u) => (u.id === updatedUser.id ? updatedUser : u))
+    );
+  };
+
+  const handleUserDeleted = (userId: number) => {
+    setUsers((users) => users.filter((u) => u.id !== userId));
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -57,68 +72,39 @@ const UsersPage = () => {
           <Button
             variant="contained"
             startIcon={<AddIcon />}
-            onClick={() => setOpenModal(true)}
+            onClick={() => setOpenAddModal(true)}
           >
             Add User
           </Button>
         </Box>
 
-        <Dialog open={openModal} onClose={() => setOpenModal(false)}>
-          <DialogTitle>Add New User</DialogTitle>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              label="Name"
-              type="text"
-              fullWidth
-              variant="outlined"
-              value={newUser.name}
-              onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-            />
-            <TextField
-              margin="dense"
-              label="Username"
-              type="text"
-              fullWidth
-              variant="outlined"
-              value={newUser.username}
-              onChange={(e) =>
-                setNewUser({ ...newUser, username: e.target.value })
-              }
-            />
-            <TextField
-              margin="dense"
-              label="Email"
-              type="email"
-              fullWidth
-              variant="outlined"
-              value={newUser.email}
-              onChange={(e) =>
-                setNewUser({ ...newUser, email: e.target.value })
-              }
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setOpenModal(false)}>Cancel</Button>
-            <Button
-              onClick={async () => {
-                try {
-                  const createdUser = await createUser(newUser);
-                  setUsers((prevUsers) => [...prevUsers, createdUser]);
-                  setNewUser({ name: "", username: "", email: "" });
-                  setOpenModal(false);
-                } catch (error) {
-                  console.error("Error creating user:", error);
-                }
-              }}
-              variant="contained"
-            >
-              Save
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <UserTable users={users} posts={posts} />
+        <UserTable
+          users={users}
+          posts={posts}
+          onEditUser={handleEditUser}
+          onDeleteUser={handleDeleteUser}
+        />
+
+        {/* Modular Modals */}
+        <AddUserModal
+          open={openAddModal}
+          onClose={() => setOpenAddModal(false)}
+          onUserAdded={handleUserAdded}
+        />
+
+        <EditUserModal
+          open={openEditModal}
+          onClose={() => setOpenEditModal(false)}
+          user={selectedUser}
+          onUserUpdated={handleUserUpdated}
+        />
+
+        <DeleteUserModal
+          open={openDeleteModal}
+          onClose={() => setOpenDeleteModal(false)}
+          user={selectedUser}
+          onUserDeleted={handleUserDeleted}
+        />
       </Box>
     </div>
   );
