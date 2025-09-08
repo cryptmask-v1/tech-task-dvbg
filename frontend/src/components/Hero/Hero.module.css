@@ -4,7 +4,7 @@
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  height: 92vh;
+  height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,4 +67,43 @@
   background-color: #0056b3;
   border-color: #0056b3;
   color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .heroSection {
+    height: calc(100vh - 56px);
+    padding: 0 20px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .link {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .link {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
 }

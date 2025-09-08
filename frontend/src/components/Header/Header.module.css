@@ -40,16 +40,16 @@
     padding: 0 16px;
     height: 56px;
   }
-  
+
   .logoImage {
     width: 40px;
     height: 40px;
   }
-  
+
   .navigation {
     gap: 12px;
   }
-  
+
   .link {
     padding: 6px 12px;
     font-size: 14px;
@@ -60,11 +60,11 @@
   .container {
     padding: 0 12px;
   }
-  
+
   .navigation {
     gap: 8px;
   }
-  
+
   .link {
     padding: 4px 8px;
     font-size: 13px;
