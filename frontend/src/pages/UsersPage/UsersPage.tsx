@@ -102,17 +102,50 @@ const UsersPage = () => {
             alignItems: "center",
             mb: 2,
             mt: 1,
+            flexDirection: { xs: "column", sm: "row" },
+            gap: { xs: 2, sm: 0 },
           }}
         >
-          <Typography variant="h4" component="h1">
+          <Typography 
+            variant="h4" 
+            component="h1"
+            sx={{
+              fontSize: { xs: "1.5rem", sm: "2rem", md: "2.125rem" },
+              textAlign: { xs: "center", sm: "left" },
+            }}
+          >
             Users Management
           </Typography>
           <Button
             variant="contained"
             startIcon={<AddIcon />}
             onClick={() => setOpenAddModal(true)}
+            size="large"
+            sx={{
+              minWidth: { xs: "200px", sm: "auto" },
+              borderRadius: "12px",
+              fontWeight: 600,
+              textTransform: "none",
+              boxShadow: "0 4px 12px rgba(25, 118, 210, 0.3)",
+              "&:hover": {
+                boxShadow: "0 6px 16px rgba(25, 118, 210, 0.4)",
+                transform: "translateY(-2px)",
+              },
+              transition: "all 0.2s ease-in-out",
+            }}
           >
-            Add User
+            <Box
+              component="span"
+              sx={{ display: { xs: "none", sm: "inline" } }}
+            >
+              Add User
+            </Box>
+            <Box
+              component="span"
+              sx={{ display: { xs: "inline", sm: "none" } }}
+            >
+              Add New User
+            </Box>
           </Button>
         </Box>
 

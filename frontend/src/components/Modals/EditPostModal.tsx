@@ -52,14 +52,14 @@ const EditPostModal = ({
     { setSubmitting }: FormikHelpers<FormValues>
   ) => {
     if (!post) return;
-    
+
     setSubmitError("");
-    
+
     try {
       const updatedPost = await updatePost(post.id, {
         title: values.title.trim(),
       });
-      
+
       onPostUpdated(updatedPost);
       onClose();
     } catch (error: unknown) {
@@ -85,7 +85,15 @@ const EditPostModal = ({
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {({ values, errors, touched, handleChange, handleBlur, isSubmitting, submitForm }) => (
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          isSubmitting,
+          submitForm,
+        }) => (
           <Form>
             <DialogContent>
               {submitError && (
@@ -93,7 +101,7 @@ const EditPostModal = ({
                   {submitError}
                 </Alert>
               )}
-              
+
               <Field
                 as={TextField}
                 autoFocus
@@ -116,16 +124,18 @@ const EditPostModal = ({
                 }}
               />
             </DialogContent>
-            
+
             <DialogActions>
               <Button onClick={handleClose} disabled={isSubmitting}>
                 Cancel
               </Button>
-              <Button 
+              <Button
                 type="submit"
-                variant="contained" 
+                variant="contained"
                 disabled={isSubmitting}
-                startIcon={isSubmitting ? <CircularProgress size={20} /> : undefined}
+                startIcon={
+                  isSubmitting ? <CircularProgress size={20} /> : undefined
+                }
               >
                 {isSubmitting ? "Updating..." : "Update Post"}
               </Button>

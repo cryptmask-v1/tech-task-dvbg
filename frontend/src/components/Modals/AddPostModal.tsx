@@ -53,9 +53,9 @@ const AddPostModal = ({
     { setSubmitting, resetForm }: FormikHelpers<FormValues>
   ) => {
     if (!user) return;
-    
+
     setSubmitError("");
-    
+
     try {
       const postData = {
         title: values.title.trim(),
@@ -94,7 +94,15 @@ const AddPostModal = ({
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {({ values, errors, touched, handleChange, handleBlur, isSubmitting, submitForm }) => (
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          isSubmitting,
+          submitForm,
+        }) => (
           <Form>
             <DialogContent>
               {submitError && (
@@ -102,7 +110,7 @@ const AddPostModal = ({
                   {submitError}
                 </Alert>
               )}
-              
+
               <Field
                 as={TextField}
                 autoFocus
@@ -126,16 +134,18 @@ const AddPostModal = ({
                 }}
               />
             </DialogContent>
-            
+
             <DialogActions>
               <Button onClick={handleClose} disabled={isSubmitting}>
                 Cancel
               </Button>
-              <Button 
+              <Button
                 type="submit"
-                variant="contained" 
+                variant="contained"
                 disabled={isSubmitting}
-                startIcon={isSubmitting ? <CircularProgress size={20} /> : undefined}
+                startIcon={
+                  isSubmitting ? <CircularProgress size={20} /> : undefined
+                }
               >
                 {isSubmitting ? "Creating..." : "Create Post"}
               </Button>

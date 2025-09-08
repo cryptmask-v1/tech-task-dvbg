@@ -62,26 +62,33 @@ const AddUserModal = ({ open, onClose, onUserAdded }: AddUserModalProps) => {
     { setSubmitting, setFieldError, resetForm }: FormikHelpers<FormValues>
   ) => {
     setSubmitError("");
-    
+
     try {
       const createdUser = await createUser({
         name: values.name.trim(),
         username: values.username.trim(),
         email: values.email.trim(),
       });
-      
+
       onUserAdded(createdUser);
       resetForm();
       onClose();
     } catch (error: unknown) {
       console.error("Error creating user:", error);
-      
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      
+
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+
       // Handle specific field errors
-      if (errorMessage.includes("username") || errorMessage.includes("Username")) {
+      if (
+        errorMessage.includes("username") ||
+        errorMessage.includes("Username")
+      ) {
         setFieldError("username", "Username already exists");
-      } else if (errorMessage.includes("email") || errorMessage.includes("Email")) {
+      } else if (
+        errorMessage.includes("email") ||
+        errorMessage.includes("Email")
+      ) {
         setFieldError("email", "Email already exists");
       } else {
         setSubmitError("Failed to create user. Please try again.");
@@ -99,14 +106,22 @@ const AddUserModal = ({ open, onClose, onUserAdded }: AddUserModalProps) => {
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle>Add New User</DialogTitle>
-      
+
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {({ values, errors, touched, handleChange, handleBlur, isSubmitting, submitForm }) => (
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          isSubmitting,
+          submitForm,
+        }) => (
           <Form>
             <DialogContent>
               {submitError && (
@@ -114,7 +129,7 @@ const AddUserModal = ({ open, onClose, onUserAdded }: AddUserModalProps) => {
                   {submitError}
                 </Alert>
               )}
-              
+
               <Field
                 as={TextField}
                 autoFocus
@@ -136,7 +151,7 @@ const AddUserModal = ({ open, onClose, onUserAdded }: AddUserModalProps) => {
                   }
                 }}
               />
-              
+
               <Field
                 as={TextField}
                 margin="dense"
@@ -151,7 +166,7 @@ const AddUserModal = ({ open, onClose, onUserAdded }: AddUserModalProps) => {
                 error={touched.username && Boolean(errors.username)}
                 helperText={touched.username && errors.username}
               />
-              
+
               <Field
                 as={TextField}
                 margin="dense"
@@ -167,16 +182,18 @@ const AddUserModal = ({ open, onClose, onUserAdded }: AddUserModalProps) => {
                 helperText={touched.email && errors.email}
               />
             </DialogContent>
-            
+
             <DialogActions>
               <Button onClick={handleClose} disabled={isSubmitting}>
                 Cancel
               </Button>
-              <Button 
+              <Button
                 type="submit"
-                variant="contained" 
+                variant="contained"
                 disabled={isSubmitting}
-                startIcon={isSubmitting ? <CircularProgress size={20} /> : undefined}
+                startIcon={
+                  isSubmitting ? <CircularProgress size={20} /> : undefined
+                }
               >
                 {isSubmitting ? "Saving..." : "Save"}
               </Button>
